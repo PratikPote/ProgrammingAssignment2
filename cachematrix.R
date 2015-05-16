@@ -1,5 +1,5 @@
-## The first function, makeCacheMatrix creates a special "vector", 
-## which is really a list containing a function to
+## makeCacheMatrix function creates a special "vector", 
+## which is a list containing performing following functions-
 ##  1.set matrix
 ##  2.get matrix
 ##  3.set the inverse of the matrix
@@ -23,12 +23,26 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## cacheSolve: This function computes the inverse of the special "matrix" returned by makeCacheMatrix above. 
-## If the inverse has already been calculated (and the matrix has not changed), 
-## then the cachesolve should retrieve the inverse from the cache.
+## cacheSolve: This function computes the inverse of the special "matrix" 
+## returned by makeCacheMatrix function above. 
+## If the inverse has already been calculated, 
+## then the cachesolve retrieves the inverse from the cache.
 
 cacheSolve <- function(x, ...) {
   
+  m <- x$getInverse()
   
-       
+  if(!is.null(m)) {
+    message("getting cached data")
+    return(m)
+  }
+  
+  data <- x$get()
+  
+  m <- solve(data, ...)
+  
+  x$setInverse(m)
+  
+  m     
+  
 }
